@@ -1,4 +1,5 @@
 https://www.seelk.co/blog/docker-swarm-on-aws-with-ansible/
+https://github.com/BorisLaporte/ansible_aws_docker_swarm_tutorial
 https://medium.com/clarusway/ansible-working-with-dynamic-inventory-using-ec2-plugin-7eddd3aaa56b
 https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html
 

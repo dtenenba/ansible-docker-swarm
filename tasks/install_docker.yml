@@ -8,6 +8,8 @@
       - curl
       - gnupg-agent
       - software-properties-common
+      - python3
+      - python3-pip
     state: present
 
 - name: Add Docker apt key
@@ -74,8 +76,11 @@
       # jsondiff and pyyaml are needed by the docker_stack module
       - jsondiff
       - pyyaml
+      - boto
+      - boto3
+      - botocore
   register: pip_install_docker
-  ignore_errors: yes
+  ignore_errors: no
 
 - name: Fetching pip
   # https://docs.ansible.com/ansible/latest/modules/get_url_module.html
@@ -98,4 +103,7 @@
       # jsondiff and pyyaml are needed by the docker_stack module
       - jsondiff
       - pyyaml
+      - boto
+      - boto3
+      - botocore
   when: pip_install_docker is failed

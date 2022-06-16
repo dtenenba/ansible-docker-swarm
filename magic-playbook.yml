@@ -1,0 +1,46 @@
+# to run a playbook on a subset of servers, do e.g.:
+# ansible-playbook -l _manager ping-playbook.yml
+# or use _worker instead of _manager
+
+---
+- name: magic
+  # hosts: "all'
+  hosts: _manager
+
+
+  user: ubuntu
+  vars:
+    ansible_ssh_private_key_file: "~/.ssh/ansible_tutorial.pem"
+  tasks:
+    - name: "set fact: first Swarm manager host"
+      set_fact:
+        first_swarm_manager_host: "{{ groups['_manager'][0] }}"
+    - name: dbg0
+      ansible.builtin.debug:
+        var: first_swarm_manager_host
+    - name: 'set fact: list remote_addrs'
+      set_fact:
+      # Create a list of all managers' private ip addresses
+        list_remote_addrs: >-
+          {{ list_remote_addrs | default([]) }} + [ '{{ item }}:2377' ]
+    - name: dbg1
+      ansible.builtin.debug:
+        var: list_remote_addrs
+
+
+    # - name: magicing
+    #   ansible.builtin.debug:
+    #     var: groups
+    # - name: lala
+    #   amazon.aws.ec2:
+    #     region: us-west-2
+    #     count_tag:
+    #       foo: bar
+    # - name: foo
+    #   set_fact:
+    #     first_swarm_manager_host: "{{ groups['_manager'][0] }}"
+    # - name: bar
+    #   ansible.builtin.debug:
+    #     var: first_swarm_manager_host
+    #     # var: "{{ groups['_manager'] }}" # " | map('extract', hostvars, 'ec2_private_ip_address') | list }}"
+
