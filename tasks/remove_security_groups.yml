@@ -1,0 +1,16 @@
+---
+# tasks/remove_security_groups.yml
+- name: "set fact: security_groups"
+  # https://docs.ansible.com/ansible/latest/modules/ec2_group_facts_module.html
+  amazon.aws.ec2_group_info:
+    filters:
+      group-name:
+        - swarm
+  register: security_groups
+
+- name: "Removing security groups"
+  # https://docs.ansible.com/ansible/latest/modules/ec2_group_module.html
+  ec2_group:
+    group_id: "{{ item.group_id }}"
+    state: absent
+  loop: "{{ security_groups.security_groups }}"

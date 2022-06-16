@@ -1,0 +1,20 @@
+plugin: aws_ec2
+regions:
+  - "us-west-2"
+keyed_groups:
+#   - key: tags.Name
+#   - key: tags.task
+  - key: tags.SwarmType
+
+hostnames:
+filters: # this works with `ansible-inventory --graph` 
+  # tag:plop: foo
+  # tag:Swarm: True
+  tag:Swarm:
+    - 'True'
+  # but it doesn't work with `ansible-playbook ping-playbook.yml`
+  # - tag:plop=foo #,Name=Tag2  # Return specific hosts only
+  instance-state-name : running
+  
+compose:
+  ansible_host: public_ip_address

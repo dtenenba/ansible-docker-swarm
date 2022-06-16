@@ -1,0 +1,8 @@
+# remove_ec2_playbook.yml
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - include_tasks: tasks/remove_ec2.yml
+    - include_tasks: tasks/remove_security_groups.yml

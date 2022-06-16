@@ -1,0 +1,29 @@
+# tasks/set_fact_ec2_ami.yml
+---
+# - name: "set fact: Ubuntu 22.04 (Jammy) AMI"
+#   # https://docs.ansible.com/ansible/latest/modules/ec2_ami_facts_module.html
+#   ec2_ami_facts:
+#     amazon.aws.ec2_ami_info:
+#       image_ids: ami-0d70546e43a941d70
+#     # see the full list of filtered elements:
+#     # https://eu-west-1.console.aws.amazon.com/ec2/home?region=eu-west-1#Images:visibility=public-images;search=379101102735,debian-stretch-hvm-x86_64-gp2-*;sort=desc:name
+#     # https://us-west-2.console.aws.amazon.com/ec2/home?region=us-west-2#Images:visibility=public-images;search=679593333241,ubuntu-jammy-22.04-amd64-server-*;sort=desc:name
+#     # owners: 679593333241
+#     # image_ids: ami-0d70546e43a941d70
+#     # canonical:
+#     # owners: 099720109477
+#     # region: us-west-2
+#     # filters:
+#     #   # name: "ubuntu/images/ubuntu-jammy-22.04-*"
+#     #   name: "ubuntu-jammy-22.04-amd64-server-*"
+#     #   # name: "debian-stretch-hvm-x86_64-gp2-*"
+#   register: ubuntu_ami
+
+- name: "set fact: get id from Ubuntu 22.04 (Jammy) AMI"
+  # https://docs.ansible.com/ansible/latest/modules/set_fact_module.html
+  # ansible.builtin.debug:
+  #   msg: bla {{ ubuntu_ami }}  
+  set_fact:
+    # There is many ubuntu AMI, let's take the first
+    # ubuntu_ami_id: "{{ ubuntu_ami.images[0].image_id }}"
+    ubuntu_ami_id: ami-0d70546e43a941d70

@@ -1,0 +1,54 @@
+# tasks/create_security_groups.yml
+---
+- name: create Swarm security groups
+  # https://docs.ansible.com/ansible/latest/modules/ec2_group_module.html
+  ec2_group:
+    # The id of the security group
+    name: swarm
+    description: >-
+      Allow swarm members to communicate between themselves,
+      allow ssh and open ports for the example voting app.
+    # The shown name
+    tags:
+      Name: swarm
+    # Left as it is, we will set the variable later
+    vpc_id: "{{ VPC_ID }}"
+    rules:
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        rule_desc: "Allow ssh from everywhere."
+        cidr_ip: 0.0.0.0/0
+        cidr_ipv6: ::/0
+      - proto: tcp
+        from_port: 2377
+        to_port: 2377
+        group_name: swarm
+        rule_desc: "Cluster management communications."
+      - proto: tcp
+        from_port: 7946
+        to_port: 7946
+        group_name: swarm
+        rule_desc: "Communication among nodes."
+      - proto: udp
+        from_port: 7946
+        to_port: 7946
+        group_name: swarm
+        rule_desc: "Communication among nodes."
+      - proto: udp
+        from_port: 4789
+        to_port: 4789
+        group_name: swarm
+        rule_desc: "Overlay network traffic."
+      - proto: tcp
+        from_port: 8080
+        to_port: 8080
+        rule_desc: "Open ports for visualizer."
+        cidr_ip: 0.0.0.0/0
+        cidr_ipv6: ::/0
+      - proto: tcp
+        from_port: 5000
+        to_port: 5001
+        rule_desc: "Open ports for the vote and result apps."
+        cidr_ip: 0.0.0.0/0
+        cidr_ipv6: ::/0
