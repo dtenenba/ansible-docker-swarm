@@ -1,0 +1,5 @@
+---
+- hosts: _manager
+  user: ubuntu
+  tasks:
+    - include_tasks: tasks/deploy_example_voting_app_stack.yml
